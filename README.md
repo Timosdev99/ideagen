@@ -36,3 +36,8 @@ to run cli input command:
 ```js
 idea-gen
 ```
+and then 
+
+```js
+idea-gen gen
+```
