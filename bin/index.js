@@ -1,63 +1,71 @@
 #!/usr/bin/env node
 import { Command } from 'commander';
 import { createRequire } from 'module';
+import { GenerativeModel } from '@google/generative-ai';
+import inquirer from 'inquirer';
+import dotenv from 'dotenv';
 
+// Load environment variables from .env file
+dotenv.config();
 
 const require = createRequire(import.meta.url);
 const pkg = require('../package.json');
 
+const isRequired = (input) => {
+  if (input.trim() === '') {
+    return 'This value is required';
+  }
+  return true;
+};
+
 const program = new Command();
+program.version(pkg.version);
 
 
-import inquirer from "inquirer";
 
-const projectIdeas = {
-    "Quick Hacks": [
-      "Build a countdown timer",
-      "Create a random joke generator",
-      "Make a simple weather CLI",
-    ],
-    "Challenges": [
-      "Build a fully functional to-do list app",
-      "Create a cryptocurrency price tracker",
-      "Develop a basic machine learning model with TensorFlow.js",
-    ],
-    "Creative Projects": [
-      "Design a personal portfolio website with animations",
-      "Build a meme generator app",
-      "Create an interactive art project using p5.js",
-    ],
-  };
-  
-  // Function to pick a random idea from a given category
-  const getRandomIdea = (category) => {
-    const ideas = projectIdeas[category];
-    const randomIndex = Math.floor(Math.random() * ideas.length);
-    return ideas[randomIndex];
-  };
-  
-  // Prompt the user to choose a category
-  const promptUserForCategory = async () => {
+
+const genAI = new GenerativeModel({ apiKey: process.env.GEMINI_API_KEY });
+const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+
+const generateProjectIdea = async (input) => {
+  const prompt = `Generate a creative project idea for a developer who wants to work on a ${input} kind of project. Provide a brief description and potential features.`;
+
+  try {
+    const result = await model.generateContent(prompt);
+    
+    return result.text;
+  } catch (error) {
+    console.error("Error generating project idea:", error.message);
+    throw new Error("Failed to generate idea. Please try again.");
+  }
+};
+
+const promptUserForCategory = async () => {
+  try {
     const { category } = await inquirer.prompt([
       {
-        type: 'list',
+        type: 'input',
         name: 'category',
         message: 'What kind of project are you in the mood for?',
-        choices: Object.keys(projectIdeas),
+        validate: isRequired,
       },
     ]);
-  
-    const idea = getRandomIdea(category);
-    console.log(`\n Here's a project idea for you: ${idea}`);
-  };
-  
-  // Run the prompt
-  promptUserForCategory();
 
-  
-  
+    const idea = await generateProjectIdea(category);
+    console.log(`\nHere's a project idea for you:\n${idea}`);
+  } catch (error) {
+    console.error('An error occurred:', error.message);
+  }
+};
 
-// program
-// .version(pkg.name)
-// .command('gen', 'generate project ideas')
-// .parse(process.argv)
+program
+  .command('gen')
+  .description('Generate project ideas')
+  .action(promptUserForCategory);
+
+program.parse(process.argv);
+
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp();
+}
