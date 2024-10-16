@@ -13,19 +13,19 @@ it allow user express their mood and suggest a project idea and Provide a brief 
  ```
 
 2. **create a .env file and include your gemini api key**
-   ```sh
+   ```js
    const GEMINI_API_KEY=
    ```
 
  3. **install necessary package**
 
-```sh
+```js
 npm i commander @google/generative-ai dotenv inquirer
 ```
 
 
 4. **link bin file**
-```sh
+```js
 npm link
 ```
 
@@ -33,11 +33,11 @@ npm link
 
 to run cli input command:
 
-```sh
+```js
 idea-gen
 ```
 and then 
 
-```sh
+```js
 idea-gen gen
 ```
