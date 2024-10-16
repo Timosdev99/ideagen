@@ -1,0 +1,25 @@
+{
+  "name": "ideasgen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "idea-gen": "./bin/index.js",
+    "gen": "./bin/gen.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "commander": "^12.1.0",
+    "commmander": "^0.0.1-security",
+    "inquirer": "^12.0.0"
+  }
+}
