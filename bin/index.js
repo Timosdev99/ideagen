@@ -39,7 +39,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 const generateProjectIdea = async (input) => {
-  const prompt = `Generate a creative project idea for a developer who wants to work on a ${input} kind of project. Provide a brief description and potential features.`;
+  const prompt = `Generate a creative project idea for a developer who wants to work on a ${input} kind of project. Provide a brief description and potential features and also the kind of programming language the project can be written in and the purpose it's going to serve.`;
 
   try {
     const result = await model.generateContent(prompt);
@@ -85,11 +85,13 @@ const promptUserForCategory = async () => {
 
      idea = await generateProjectIdea(category);
     console.log(`\nHere's a project idea for you:\n${idea}`);
+   
 
    }
    else {
      idea = await generateProjectIdea(List);
     console.log(`\nHere's a project idea for you:\n${idea}`);
+   
    }
 
    const { Save } = await inquirer.prompt([
