@@ -14,7 +14,7 @@ it allow user express their mood and suggest a project idea and Provide a brief 
 
 2. **create a .env file and include your gemini api key**
    ```js
-   const GEMINI_API_KEY=your_gemini_api_key
+   GEMINI_API_KEY=your_gemini_api_key
    ```
 
  3. **install necessary package**
