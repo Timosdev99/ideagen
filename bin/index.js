@@ -19,7 +19,7 @@ const require = createRequire(import.meta.url);
 const pkg = require('../package.json');
 
 const isRequired = (input) => {
-  if (input.trim() === '') {
+  if (input === '') {
     return 'This value is required';
   }
   return true;
@@ -74,7 +74,7 @@ program
 
 program.parse(process.argv);
 
-// If no command is provided, show help
+
 if (!process.argv.slice(2).length) {
   program.outputHelp();
 }
