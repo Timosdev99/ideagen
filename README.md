@@ -1,6 +1,6 @@
 # Simple command line interface
 
-the `command line interface` is a simple cli that help you generate project idea 
+the `command line interface` is a simple cli tool that help you generate project idea 
 
 it allow user express their mood and suggest a project idea and Provide a brief description and potential features.
 
