@@ -1,4 +1,4 @@
-# Simple command line interface 
+# Simple command line interface  
 
 the `command line interface` is a simple cli tool that help you generate project idea 
 
